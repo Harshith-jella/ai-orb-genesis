@@ -63,7 +63,7 @@ const Index = () => {
           >
             Get instant legal guidance, document analysis, and case preparation 
             powered by advanced AI technology
-          </p>
+          </motion.p>
         </motion.div>
 
         {/* CTA Button */}
