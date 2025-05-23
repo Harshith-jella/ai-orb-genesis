@@ -1,10 +1,12 @@
-
 import { motion } from "framer-motion";
 import Spline from "@splinetool/react-spline";
 import { Button } from "@/components/ui/button";
 import { Sparkles } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const Index = () => {
+  const navigate = useNavigate();
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-950 via-blue-950 to-slate-900 relative overflow-hidden">
       {/* Enhanced Background Effects */}
@@ -116,6 +118,7 @@ const Index = () => {
             transition={{ type: "spring", stiffness: 400, damping: 17 }}
           >
             <Button
+              onClick={() => navigate('/chat')}
               size="lg"
               className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-12 py-6 text-xl font-semibold rounded-full shadow-2xl hover:shadow-blue-500/25 transition-all duration-300 border-0 group relative overflow-hidden"
             >
