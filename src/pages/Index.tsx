@@ -11,8 +11,8 @@ const Index = () => {
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(120,119,198,0.1),transparent_50%)]"></div>
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_20%,rgba(120,119,198,0.05),transparent_50%)]"></div>
       
-      {/* 3D Spline Model */}
-      <div className="absolute inset-0 z-10">
+      {/* First 3D Spline Model (Background) */}
+      <div className="absolute inset-0 z-5">
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -21,6 +21,21 @@ const Index = () => {
         >
           <Spline
             scene="https://prod.spline.design/awnppR7FHKyD4b5s/scene.splinecode"
+            className="w-full h-full"
+          />
+        </motion.div>
+      </div>
+
+      {/* Second 3D Spline Model (Foreground) */}
+      <div className="absolute inset-0 z-10">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 1.5, ease: "easeOut", delay: 0.3 }}
+          className="w-full h-full"
+        >
+          <Spline
+            scene="https://prod.spline.design/t9yrc3MKciefWvt1/scene.splinecode"
             className="w-full h-full"
           />
         </motion.div>
@@ -123,7 +138,7 @@ const Index = () => {
       </div>
 
       {/* Floating Particles */}
-      <div className="absolute inset-0 z-5">
+      <div className="absolute inset-0 z-15">
         {[...Array(20)].map((_, i) => (
           <motion.div
             key={i}
