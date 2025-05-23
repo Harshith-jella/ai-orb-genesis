@@ -20,7 +20,7 @@ const Index = () => {
           className="w-full h-full"
         >
           <Spline
-            scene="https://prod.spline.design/t9yrc3MKciefWvt1/scene.splinecode"
+            scene="https://prod.spline.design/awnppR7FHKyD4b5s/scene.splinecode"
             className="w-full h-full"
           />
         </motion.div>
