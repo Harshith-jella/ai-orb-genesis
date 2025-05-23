@@ -42,7 +42,7 @@ const Index = () => {
       </div>
 
       {/* Content Overlay */}
-      <div className="relative z-20 min-h-screen flex flex-col items-center justify-center px-4 text-center">
+      <div className="relative z-20 min-h-screen flex flex-col items-center justify-center px-4 text-center pt-[50vh]">
         {/* Hero Text */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
