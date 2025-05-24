@@ -33,48 +33,6 @@ const LegalChat = () => {
     scrollToBottom();
   }, [messages, isTyping]);
 
-  // POST webhook call on component mount
-  useEffect(() => {
-    const fetchWebhookData = async () => {
-      try {
-        console.log('Sending POST request to webhook...');
-        const response = await fetch('https://harshithjella.app.n8n.cloud/webhook-test/general-legal-bot', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            message: 'Bot initialized',
-            timestamp: new Date().toISOString()
-          }),
-        });
-
-        if (response.ok) {
-          const data = await response.json();
-          console.log('POST webhook response:', data);
-          
-          // If the webhook returns a message, add it to the chat
-          if (data.message || data.botReply) {
-            const webhookMessage: Message = {
-              id: 'webhook-' + Date.now(),
-              content: data.message || data.botReply || 'Webhook data received successfully.',
-              isAI: true,
-              timestamp: new Date(),
-            };
-            
-            setMessages(prev => [...prev, webhookMessage]);
-          }
-        } else {
-          console.error('POST webhook failed with status:', response.status);
-        }
-      } catch (error) {
-        console.error('Error calling POST webhook:', error);
-      }
-    };
-
-    fetchWebhookData();
-  }, []);
-
   const handleSendMessage = async () => {
     if (!inputValue.trim()) return;
 
@@ -119,11 +77,6 @@ const LegalChat = () => {
             <Bot className="w-5 h-5 text-white" />
           </div>
           <h1 className="text-xl font-semibold text-slate-800">General Legal Bot</h1>
-          <div className="ml-auto">
-            <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-              Webhook Connected
-            </span>
-          </div>
         </div>
       </div>
 
