@@ -44,45 +44,21 @@ const LegalChat = () => {
     };
 
     setMessages(prev => [...prev, userMessage]);
-    const currentMessage = inputValue;
     setInputValue('');
     setIsTyping(true);
 
-    try {
-      const response = await fetch('https://harshithjella.app.n8n.cloud/webhook-test/General-legal-bot', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ message: currentMessage }),
-      });
-
-      if (response.ok) {
-        const data = await response.json();
-        const aiResponse: Message = {
-          id: (Date.now() + 1).toString(),
-          content: data.response || data.message || "I received your message and I'm processing it. Could you please provide more details about your legal question?",
-          isAI: true,
-          timestamp: new Date(),
-        };
-        
-        setMessages(prev => [...prev, aiResponse]);
-      } else {
-        throw new Error('Failed to get response');
-      }
-    } catch (error) {
-      console.error('Error sending message:', error);
-      const errorResponse: Message = {
+    // Simulate AI response delay
+    setTimeout(() => {
+      const aiResponse: Message = {
         id: (Date.now() + 1).toString(),
-        content: "I apologize, but I'm having trouble connecting right now. Please try again in a moment. In the meantime, I can still help you understand general legal concepts.",
+        content: "Thank you for your message. This is a demo response. In a full implementation, this would connect to an AI legal assistant service.",
         isAI: true,
         timestamp: new Date(),
       };
       
-      setMessages(prev => [...prev, errorResponse]);
-    } finally {
+      setMessages(prev => [...prev, aiResponse]);
       setIsTyping(false);
-    }
+    }, 2000);
   };
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
@@ -103,7 +79,7 @@ const LegalChat = () => {
           <h1 className="text-xl font-semibold text-slate-800">General Legal Bot</h1>
           <div className="ml-auto">
             <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
-              Online
+              Demo Mode
             </span>
           </div>
         </div>
