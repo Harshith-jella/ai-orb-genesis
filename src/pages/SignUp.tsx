@@ -8,6 +8,7 @@ import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { useNavigate, Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
+import Spline from '@splinetool/react-spline';
 
 interface SignUpFormData {
   fullName: string;
@@ -75,6 +76,21 @@ const SignUp = () => {
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-to-r from-blue-500/10 to-transparent rounded-full blur-3xl"></div>
         <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-gradient-to-l from-purple-500/10 to-transparent rounded-full blur-3xl"></div>
       </motion.div>
+      
+      {/* Spline Background */}
+      <div className="absolute inset-0 z-5">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 1.5, ease: "easeOut" }}
+          className="w-full h-full"
+        >
+          <Spline
+            scene="https://prod.spline.design/6AfKjYx5R5JdLMnI/scene.splinecode"
+            className="w-full h-full"
+          />
+        </motion.div>
+      </div>
 
       {/* Enhanced Floating Particles */}
       <div className="absolute inset-0 z-15">
