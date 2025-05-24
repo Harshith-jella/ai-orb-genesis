@@ -33,6 +33,44 @@ const LegalChat = () => {
     scrollToBottom();
   }, [messages, isTyping]);
 
+  // GET webhook call on component mount
+  useEffect(() => {
+    const fetchWebhookData = async () => {
+      try {
+        console.log('Fetching data from GET webhook...');
+        const response = await fetch('https://harshithjella.app.n8n.cloud/webhook-test/general-legal-bot', {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          console.log('GET webhook response:', data);
+          
+          // If the webhook returns a message, add it to the chat
+          if (data.message || data.botReply) {
+            const webhookMessage: Message = {
+              id: 'webhook-' + Date.now(),
+              content: data.message || data.botReply || 'Webhook data received successfully.',
+              isAI: true,
+              timestamp: new Date(),
+            };
+            
+            setMessages(prev => [...prev, webhookMessage]);
+          }
+        } else {
+          console.error('GET webhook failed with status:', response.status);
+        }
+      } catch (error) {
+        console.error('Error calling GET webhook:', error);
+      }
+    };
+
+    fetchWebhookData();
+  }, []);
+
   const handleSendMessage = async () => {
     if (!inputValue.trim()) return;
 
@@ -78,8 +116,8 @@ const LegalChat = () => {
           </div>
           <h1 className="text-xl font-semibold text-slate-800">General Legal Bot</h1>
           <div className="ml-auto">
-            <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-600">
-              Demo Mode
+            <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+              Webhook Connected
             </span>
           </div>
         </div>
