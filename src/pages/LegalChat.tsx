@@ -53,11 +53,16 @@ const LegalChat = () => {
 
       if (response.ok) {
         console.log('Message sent to webhook successfully');
+        const responseData = await response.json();
+        console.log('Webhook response:', responseData);
+        return responseData;
       } else {
         console.error('Failed to send message to webhook:', response.status);
+        return null;
       }
     } catch (error) {
       console.error('Error sending message to webhook:', error);
+      return null;
     }
   };
 
@@ -75,24 +80,35 @@ const LegalChat = () => {
     setInputValue('');
     setIsTyping(true);
 
-    // Send user message to webhook
-    await sendToWebhook(userMessage);
+    // Send user message to webhook and wait for response
+    const webhookResponse = await sendToWebhook(userMessage);
+    
+    // Create AI response based on webhook response
+    let aiResponseContent = "I apologize, but I'm having trouble connecting to the legal assistant service right now. Please try again.";
+    
+    if (webhookResponse) {
+      // Extract response content from webhook response
+      if (webhookResponse.output) {
+        aiResponseContent = webhookResponse.output;
+      } else if (typeof webhookResponse === 'string') {
+        aiResponseContent = webhookResponse;
+      } else if (webhookResponse.message) {
+        aiResponseContent = webhookResponse.message;
+      }
+    }
 
-    // Simulate AI response delay
-    setTimeout(async () => {
-      const aiResponse: Message = {
-        id: (Date.now() + 1).toString(),
-        content: "Thank you for your message. This is a demo response. In a full implementation, this would connect to an AI legal assistant service.",
-        isAI: true,
-        timestamp: new Date(),
-      };
-      
-      setMessages(prev => [...prev, aiResponse]);
-      setIsTyping(false);
+    const aiResponse: Message = {
+      id: (Date.now() + 1).toString(),
+      content: aiResponseContent,
+      isAI: true,
+      timestamp: new Date(),
+    };
+    
+    setMessages(prev => [...prev, aiResponse]);
+    setIsTyping(false);
 
-      // Send AI response to webhook
-      await sendToWebhook(aiResponse);
-    }, 2000);
+    // Send AI response to webhook for logging
+    await sendToWebhook(aiResponse);
   };
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
