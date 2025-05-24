@@ -1,4 +1,3 @@
-
 import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Send, User } from 'lucide-react';
@@ -180,17 +179,12 @@ const LegalChat = () => {
         <div className="max-w-4xl mx-auto flex items-center gap-3">
           <div className="w-12 h-12 rounded-full overflow-hidden flex items-center justify-center bg-white/20 backdrop-blur-sm border-2 border-white/30">
             <img 
-              src="/lovable-uploads/a8363c4d-868a-43dc-afae-732459153676.png" 
+              src="/lovable-uploads/2d29db60-2a4b-46a5-b5b3-2e85e9e4df3e.png" 
               alt="Legal Bot"
               className="w-full h-full object-cover"
             />
           </div>
           <h1 className="text-xl font-semibold text-white">General Legal Bot</h1>
-          <div className="ml-auto">
-            <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-green-500/20 text-green-300 border border-green-500/30">
-              Webhook Active
-            </span>
-          </div>
         </div>
       </div>
 
@@ -226,7 +220,7 @@ const LegalChat = () => {
                   <div className="order-1 mr-3 flex-shrink-0">
                     <div className="w-10 h-10 rounded-full overflow-hidden flex items-center justify-center bg-white/20 backdrop-blur-sm border-2 border-white/30">
                       <img 
-                        src="/lovable-uploads/a8363c4d-868a-43dc-afae-732459153676.png" 
+                        src="/lovable-uploads/2d29db60-2a4b-46a5-b5b3-2e85e9e4df3e.png" 
                         alt="Legal Bot"
                         className="w-full h-full object-cover"
                       />
@@ -258,7 +252,7 @@ const LegalChat = () => {
                 <div className="mr-3 flex-shrink-0">
                   <div className="w-10 h-10 rounded-full overflow-hidden flex items-center justify-center bg-white/20 backdrop-blur-sm border-2 border-white/30">
                     <img 
-                      src="/lovable-uploads/a8363c4d-868a-43dc-afae-732459153676.png" 
+                      src="/lovable-uploads/2d29db60-2a4b-46a5-b5b3-2e85e9e4df3e.png" 
                       alt="Legal Bot"
                       className="w-full h-full object-cover"
                     />
