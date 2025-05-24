@@ -1,3 +1,4 @@
+
 import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Send, User } from 'lucide-react';
@@ -118,20 +119,75 @@ const LegalChat = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 flex flex-col">
+    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-blue-950 to-slate-900 relative overflow-hidden flex flex-col">
+      {/* Enhanced Background Effects */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(120,119,198,0.15),transparent_50%)]"></div>
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_20%,rgba(120,119,198,0.1),transparent_50%)]"></div>
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_80%,rgba(168,85,247,0.08),transparent_50%)]"></div>
+      <div className="absolute inset-0 bg-[conic-gradient(from_0deg_at_50%_50%,rgba(59,130,246,0.05),rgba(147,51,234,0.05),rgba(59,130,246,0.05))]"></div>
+      
+      {/* Animated Background Mesh */}
+      <div className="absolute inset-0 opacity-30">
+        <div className="absolute inset-0 bg-[linear-gradient(45deg,rgba(59,130,246,0.02)_1px,transparent_1px),linear-gradient(-45deg,rgba(147,51,234,0.02)_1px,transparent_1px)] bg-[size:60px_60px]"></div>
+      </div>
+      
+      {/* Dynamic Light Rays */}
+      <motion.div
+        className="absolute inset-0 z-5"
+        animate={{
+          rotate: [0, 360],
+        }}
+        transition={{
+          duration: 120,
+          repeat: Infinity,
+          ease: "linear",
+        }}
+      >
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-to-r from-blue-500/10 to-transparent rounded-full blur-3xl"></div>
+        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-gradient-to-l from-purple-500/10 to-transparent rounded-full blur-3xl"></div>
+      </motion.div>
+
+      {/* Enhanced Floating Particles */}
+      <div className="absolute inset-0 z-15">
+        {[...Array(20)].map((_, i) => (
+          <motion.div
+            key={i}
+            className="absolute rounded-full"
+            style={{
+              width: `${Math.random() * 3 + 1}px`,
+              height: `${Math.random() * 3 + 1}px`,
+              background: i % 3 === 0 ? 'rgba(59, 130, 246, 0.3)' : i % 3 === 1 ? 'rgba(147, 51, 234, 0.3)' : 'rgba(168, 85, 247, 0.3)',
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+            }}
+            animate={{
+              y: [0, -30, 0],
+              opacity: [0.2, 0.8, 0.2],
+              scale: [0.5, 1, 0.5],
+            }}
+            transition={{
+              duration: 3 + Math.random() * 2,
+              repeat: Infinity,
+              delay: Math.random() * 2,
+              ease: "easeInOut",
+            }}
+          />
+        ))}
+      </div>
+
       {/* Top Bar */}
-      <div className="bg-white border-b border-slate-200 px-4 py-4 shadow-sm">
+      <div className="relative z-20 bg-white/10 backdrop-blur-sm border-b border-white/20 px-4 py-4 shadow-sm">
         <div className="max-w-4xl mx-auto flex items-center gap-3">
-          <div className="w-12 h-12 rounded-full overflow-hidden flex items-center justify-center bg-slate-100 border-2 border-slate-200">
+          <div className="w-12 h-12 rounded-full overflow-hidden flex items-center justify-center bg-white/20 backdrop-blur-sm border-2 border-white/30">
             <img 
               src="/lovable-uploads/a8363c4d-868a-43dc-afae-732459153676.png" 
               alt="Legal Bot"
               className="w-full h-full object-cover"
             />
           </div>
-          <h1 className="text-xl font-semibold text-slate-800">General Legal Bot</h1>
+          <h1 className="text-xl font-semibold text-white">General Legal Bot</h1>
           <div className="ml-auto">
-            <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
+            <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-green-500/20 text-green-300 border border-green-500/30">
               Webhook Active
             </span>
           </div>
@@ -139,7 +195,7 @@ const LegalChat = () => {
       </div>
 
       {/* Chat Messages Area */}
-      <div className="flex-1 overflow-y-auto px-4 py-6">
+      <div className="relative z-20 flex-1 overflow-y-auto px-4 py-6">
         <div className="max-w-4xl mx-auto space-y-6">
           <AnimatePresence>
             {messages.map((message) => (
@@ -155,20 +211,20 @@ const LegalChat = () => {
                   <div
                     className={`px-4 py-3 rounded-2xl ${
                       message.isAI
-                        ? 'bg-white border border-slate-200 text-slate-800 rounded-bl-md'
-                        : 'bg-blue-600 text-white rounded-br-md'
-                    } shadow-sm`}
+                        ? 'bg-white/10 backdrop-blur-sm border border-white/20 text-white rounded-bl-md'
+                        : 'bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-br-md'
+                    } shadow-lg`}
                   >
                     <p className="text-sm leading-relaxed">{message.content}</p>
                   </div>
-                  <div className={`mt-2 text-xs text-slate-500 ${message.isAI ? 'text-left' : 'text-right'}`}>
+                  <div className={`mt-2 text-xs text-slate-300 ${message.isAI ? 'text-left' : 'text-right'}`}>
                     {message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                   </div>
                 </div>
                 
                 {message.isAI && (
                   <div className="order-1 mr-3 flex-shrink-0">
-                    <div className="w-10 h-10 rounded-full overflow-hidden flex items-center justify-center bg-slate-100 border-2 border-slate-200">
+                    <div className="w-10 h-10 rounded-full overflow-hidden flex items-center justify-center bg-white/20 backdrop-blur-sm border-2 border-white/30">
                       <img 
                         src="/lovable-uploads/a8363c4d-868a-43dc-afae-732459153676.png" 
                         alt="Legal Bot"
@@ -180,7 +236,7 @@ const LegalChat = () => {
                 
                 {!message.isAI && (
                   <div className="order-2 ml-3 flex-shrink-0">
-                    <div className="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center">
+                    <div className="w-10 h-10 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full flex items-center justify-center">
                       <User className="w-5 h-5 text-white" />
                     </div>
                   </div>
@@ -200,7 +256,7 @@ const LegalChat = () => {
                 className="flex justify-start"
               >
                 <div className="mr-3 flex-shrink-0">
-                  <div className="w-10 h-10 rounded-full overflow-hidden flex items-center justify-center bg-slate-100 border-2 border-slate-200">
+                  <div className="w-10 h-10 rounded-full overflow-hidden flex items-center justify-center bg-white/20 backdrop-blur-sm border-2 border-white/30">
                     <img 
                       src="/lovable-uploads/a8363c4d-868a-43dc-afae-732459153676.png" 
                       alt="Legal Bot"
@@ -209,14 +265,14 @@ const LegalChat = () => {
                   </div>
                 </div>
                 <div className="max-w-xs">
-                  <div className="px-4 py-3 bg-white border border-slate-200 rounded-2xl rounded-bl-md shadow-sm">
+                  <div className="px-4 py-3 bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl rounded-bl-md shadow-lg">
                     <div className="flex space-x-1">
-                      <div className="w-2 h-2 bg-slate-400 rounded-full animate-bounce"></div>
-                      <div className="w-2 h-2 bg-slate-400 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
-                      <div className="w-2 h-2 bg-slate-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+                      <div className="w-2 h-2 bg-white/60 rounded-full animate-bounce"></div>
+                      <div className="w-2 h-2 bg-white/60 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
+                      <div className="w-2 h-2 bg-white/60 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
                     </div>
                   </div>
-                  <div className="mt-2 text-xs text-slate-500">AI is typing...</div>
+                  <div className="mt-2 text-xs text-slate-300">AI is typing...</div>
                 </div>
               </motion.div>
             )}
@@ -227,11 +283,11 @@ const LegalChat = () => {
       </div>
 
       {/* Input Section */}
-      <div className="border-t border-slate-200 bg-white px-4 py-4">
+      <div className="relative z-20 border-t border-white/20 bg-white/5 backdrop-blur-sm px-4 py-4">
         <div className="max-w-4xl mx-auto">
           {/* Helper Tip */}
           <div className="mb-3 text-center">
-            <span className="text-sm text-slate-500">You can type in plain language.</span>
+            <span className="text-sm text-slate-300">You can type in plain language.</span>
           </div>
           
           {/* Input Bar */}
@@ -242,7 +298,7 @@ const LegalChat = () => {
                 onChange={(e) => setInputValue(e.target.value)}
                 onKeyPress={handleKeyPress}
                 placeholder="Describe your legal issue..."
-                className="rounded-full pr-12 py-3 border-slate-300 focus:border-blue-500 focus:ring-blue-500"
+                className="rounded-full pr-12 py-3 bg-white/10 backdrop-blur-sm border-white/30 text-white placeholder:text-slate-300 focus:border-blue-400 focus:ring-blue-400/50"
                 disabled={isTyping}
               />
             </div>
@@ -250,7 +306,7 @@ const LegalChat = () => {
               onClick={handleSendMessage}
               disabled={!inputValue.trim() || isTyping}
               size="icon"
-              className="rounded-full w-10 h-10 bg-blue-600 hover:bg-blue-700 disabled:bg-slate-300"
+              className="rounded-full w-10 h-10 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 disabled:bg-slate-500/50 border-0"
             >
               <Send className="w-4 h-4" />
             </Button>
