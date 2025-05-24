@@ -1,3 +1,4 @@
+
 import { motion } from "framer-motion";
 import Spline from "@splinetool/react-spline";
 import { Button } from "@/components/ui/button";
@@ -89,9 +90,12 @@ const Index = () => {
           </motion.div>
 
           <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold text-white mb-6 leading-tight">
-            Your AI
+            Legal Help.
             <span className="block bg-gradient-to-r from-blue-400 via-purple-500 to-blue-600 bg-clip-text text-transparent">
-              Legal Assistant
+              AI Fast.
+            </span>
+            <span className="block bg-gradient-to-r from-blue-400 via-purple-500 to-blue-600 bg-clip-text text-transparent">
+              Lawyer Secure.
             </span>
           </h1>
 
@@ -101,8 +105,7 @@ const Index = () => {
             transition={{ duration: 0.6, delay: 1.2 }}
             className="text-xl md:text-2xl text-slate-300 max-w-3xl mx-auto leading-relaxed"
           >
-            Get instant legal guidance, document analysis, and case preparation 
-            powered by advanced AI technology
+            Our AI understands your issue, routes it to the right legal area, and connects you with a trusted lawyer — securely
           </motion.p>
         </motion.div>
 
