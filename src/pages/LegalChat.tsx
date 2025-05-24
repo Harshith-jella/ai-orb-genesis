@@ -1,3 +1,4 @@
+
 import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Send, User } from 'lucide-react';
@@ -117,6 +118,24 @@ const LegalChat = () => {
     }
   };
 
+  // Bot Avatar Component for better reusability and styling
+  const BotAvatar = ({ className = "" }: { className?: string }) => (
+    <div className={`w-10 h-10 rounded-full overflow-hidden flex items-center justify-center bg-white/20 backdrop-blur-sm border-2 border-white/30 ${className}`}>
+      <img 
+        src="/lovable-uploads/2d29db60-2a4b-46a5-b5b3-2e85e9e4df3e.png" 
+        alt="Legal Bot"
+        className="w-full h-full object-cover rounded-full"
+        onError={(e) => {
+          console.error('Failed to load bot image');
+          // Fallback to a div with initials if image fails to load
+          e.currentTarget.style.display = 'none';
+          e.currentTarget.parentElement!.innerHTML = '<div class="w-full h-full bg-blue-500 rounded-full flex items-center justify-center text-white text-sm font-bold">LB</div>';
+        }}
+        onLoad={() => console.log('Bot image loaded successfully')}
+      />
+    </div>
+  );
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-950 via-blue-950 to-slate-900 relative overflow-hidden flex flex-col">
       {/* Enhanced Background Effects */}
@@ -177,13 +196,7 @@ const LegalChat = () => {
       {/* Top Bar */}
       <div className="relative z-20 bg-white/10 backdrop-blur-sm border-b border-white/20 px-4 py-4 shadow-sm">
         <div className="max-w-4xl mx-auto flex items-center gap-3">
-          <div className="w-12 h-12 rounded-full overflow-hidden flex items-center justify-center bg-white/20 backdrop-blur-sm border-2 border-white/30">
-            <img 
-              src="/lovable-uploads/2d29db60-2a4b-46a5-b5b3-2e85e9e4df3e.png" 
-              alt="Legal Bot"
-              className="w-full h-full object-cover"
-            />
-          </div>
+          <BotAvatar className="w-12 h-12" />
           <h1 className="text-xl font-semibold text-white">General Legal Bot</h1>
         </div>
       </div>
@@ -218,13 +231,7 @@ const LegalChat = () => {
                 
                 {message.isAI && (
                   <div className="order-1 mr-3 flex-shrink-0">
-                    <div className="w-10 h-10 rounded-full overflow-hidden flex items-center justify-center bg-white/20 backdrop-blur-sm border-2 border-white/30">
-                      <img 
-                        src="/lovable-uploads/2d29db60-2a4b-46a5-b5b3-2e85e9e4df3e.png" 
-                        alt="Legal Bot"
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
+                    <BotAvatar />
                   </div>
                 )}
                 
@@ -250,13 +257,7 @@ const LegalChat = () => {
                 className="flex justify-start"
               >
                 <div className="mr-3 flex-shrink-0">
-                  <div className="w-10 h-10 rounded-full overflow-hidden flex items-center justify-center bg-white/20 backdrop-blur-sm border-2 border-white/30">
-                    <img 
-                      src="/lovable-uploads/2d29db60-2a4b-46a5-b5b3-2e85e9e4df3e.png" 
-                      alt="Legal Bot"
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
+                  <BotAvatar />
                 </div>
                 <div className="max-w-xs">
                   <div className="px-4 py-3 bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl rounded-bl-md shadow-lg">
