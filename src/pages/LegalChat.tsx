@@ -33,21 +33,25 @@ const LegalChat = () => {
     scrollToBottom();
   }, [messages, isTyping]);
 
-  // GET webhook call on component mount
+  // POST webhook call on component mount
   useEffect(() => {
     const fetchWebhookData = async () => {
       try {
-        console.log('Fetching data from GET webhook...');
+        console.log('Sending POST request to webhook...');
         const response = await fetch('https://harshithjella.app.n8n.cloud/webhook-test/general-legal-bot', {
-          method: 'GET',
+          method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
+          body: JSON.stringify({
+            message: 'Bot initialized',
+            timestamp: new Date().toISOString()
+          }),
         });
 
         if (response.ok) {
           const data = await response.json();
-          console.log('GET webhook response:', data);
+          console.log('POST webhook response:', data);
           
           // If the webhook returns a message, add it to the chat
           if (data.message || data.botReply) {
@@ -61,10 +65,10 @@ const LegalChat = () => {
             setMessages(prev => [...prev, webhookMessage]);
           }
         } else {
-          console.error('GET webhook failed with status:', response.status);
+          console.error('POST webhook failed with status:', response.status);
         }
       } catch (error) {
-        console.error('Error calling GET webhook:', error);
+        console.error('Error calling POST webhook:', error);
       }
     };
 
