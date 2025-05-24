@@ -1,8 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Send, User } from 'lucide-react';
+import { Send, User, ArrowLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { useNavigate } from 'react-router-dom';
 
 interface Message {
   id: string;
@@ -12,6 +13,7 @@ interface Message {
 }
 
 const LegalChat = () => {
+  const navigate = useNavigate();
   const [messages, setMessages] = useState<Message[]>([
     {
       id: '1',
@@ -135,6 +137,10 @@ const LegalChat = () => {
     </div>
   );
 
+  const handleGoBack = () => {
+    navigate(-1); // Go back to previous page
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-950 via-blue-950 to-slate-900 relative overflow-hidden flex flex-col">
       {/* Enhanced Background Effects */}
@@ -195,8 +201,26 @@ const LegalChat = () => {
       {/* Top Bar */}
       <div className="relative z-20 bg-white/10 backdrop-blur-sm border-b border-white/20 px-4 py-4 shadow-sm">
         <div className="max-w-4xl mx-auto flex items-center gap-3">
-          <BotAvatar className="w-12 h-12" />
-          <h1 className="text-xl font-semibold text-white">General Legal Bot</h1>
+          {/* Back Button */}
+          <Button
+            onClick={handleGoBack}
+            variant="ghost"
+            size="icon"
+            className="text-white hover:bg-white/20 transition-colors duration-200 shrink-0"
+          >
+            <ArrowLeft className="w-5 h-5" />
+          </Button>
+          
+          <BotAvatar className="w-12 h-12 shrink-0" />
+          
+          <div className="flex flex-col min-w-0 flex-1">
+            <h1 className="text-lg md:text-xl font-semibold text-white truncate">
+              General Legal Bot
+            </h1>
+            <span className="text-xs md:text-sm text-slate-300 truncate">
+              AI Legal Assistant
+            </span>
+          </div>
         </div>
       </div>
 
