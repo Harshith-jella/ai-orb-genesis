@@ -49,7 +49,7 @@ const LegalChat = () => {
     setIsTyping(true);
 
     try {
-      const response = await fetch('https://harshithjella.app.n8n.cloud/webhook-test/lega-bot', {
+      const response = await fetch('https://harshithjella.app.n8n.cloud/webhook-test/General-legal-bot', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
