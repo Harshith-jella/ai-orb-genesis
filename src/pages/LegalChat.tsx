@@ -1,4 +1,3 @@
-
 import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Send, User } from 'lucide-react';
@@ -122,7 +121,7 @@ const LegalChat = () => {
   const BotAvatar = ({ className = "" }: { className?: string }) => (
     <div className={`w-10 h-10 rounded-full overflow-hidden flex items-center justify-center bg-white/20 backdrop-blur-sm border-2 border-white/30 ${className}`}>
       <img 
-        src="/lovable-uploads/2d29db60-2a4b-46a5-b5b3-2e85e9e4df3e.png" 
+        src="/lovable-uploads/1264c6c8-c177-4310-8a70-03eff23c039d.png" 
         alt="Legal Bot"
         className="w-full h-full object-cover rounded-full"
         onError={(e) => {
