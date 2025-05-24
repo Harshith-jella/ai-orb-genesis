@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Send, Bot, User } from 'lucide-react';
+import { Send, User } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 
@@ -122,8 +122,12 @@ const LegalChat = () => {
       {/* Top Bar */}
       <div className="bg-white border-b border-slate-200 px-4 py-4 shadow-sm">
         <div className="max-w-4xl mx-auto flex items-center gap-3">
-          <div className="w-12 h-12 rounded-full flex items-center justify-center bg-blue-600">
-            <Bot className="w-6 h-6 text-white" />
+          <div className="w-12 h-12 rounded-full overflow-hidden flex items-center justify-center bg-slate-100 border-2 border-slate-200">
+            <img 
+              src="/lovable-uploads/a8363c4d-868a-43dc-afae-732459153676.png" 
+              alt="Legal Bot"
+              className="w-full h-full object-cover"
+            />
           </div>
           <h1 className="text-xl font-semibold text-slate-800">General Legal Bot</h1>
           <div className="ml-auto">
@@ -164,8 +168,12 @@ const LegalChat = () => {
                 
                 {message.isAI && (
                   <div className="order-1 mr-3 flex-shrink-0">
-                    <div className="w-10 h-10 rounded-full flex items-center justify-center bg-blue-600">
-                      <Bot className="w-5 h-5 text-white" />
+                    <div className="w-10 h-10 rounded-full overflow-hidden flex items-center justify-center bg-slate-100 border-2 border-slate-200">
+                      <img 
+                        src="/lovable-uploads/a8363c4d-868a-43dc-afae-732459153676.png" 
+                        alt="Legal Bot"
+                        className="w-full h-full object-cover"
+                      />
                     </div>
                   </div>
                 )}
@@ -192,8 +200,12 @@ const LegalChat = () => {
                 className="flex justify-start"
               >
                 <div className="mr-3 flex-shrink-0">
-                  <div className="w-10 h-10 rounded-full flex items-center justify-center bg-blue-600">
-                    <Bot className="w-5 h-5 text-white" />
+                  <div className="w-10 h-10 rounded-full overflow-hidden flex items-center justify-center bg-slate-100 border-2 border-slate-200">
+                    <img 
+                      src="/lovable-uploads/a8363c4d-868a-43dc-afae-732459153676.png" 
+                      alt="Legal Bot"
+                      className="w-full h-full object-cover"
+                    />
                   </div>
                 </div>
                 <div className="max-w-xs">
