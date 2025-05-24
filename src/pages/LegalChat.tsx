@@ -1,9 +1,9 @@
-
 import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Send, Bot, User } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import Spline from '@splinetool/react-spline';
 
 interface Message {
   id: string;
@@ -123,8 +123,11 @@ const LegalChat = () => {
       {/* Top Bar */}
       <div className="bg-white border-b border-slate-200 px-4 py-4 shadow-sm">
         <div className="max-w-4xl mx-auto flex items-center gap-3">
-          <div className="w-8 h-8 bg-navy-600 rounded-full flex items-center justify-center">
-            <Bot className="w-5 h-5 text-white" />
+          <div className="w-8 h-8 rounded-full overflow-hidden flex items-center justify-center bg-navy-600">
+            <Spline
+              scene="https://prod.spline.design/6Wq1Q7YGyM-iab9i/scene.splinecode"
+              style={{ width: '100%', height: '100%' }}
+            />
           </div>
           <h1 className="text-xl font-semibold text-slate-800">General Legal Bot</h1>
           <div className="ml-auto">
@@ -165,8 +168,11 @@ const LegalChat = () => {
                 
                 {message.isAI && (
                   <div className="order-1 mr-3 flex-shrink-0">
-                    <div className="w-8 h-8 bg-slate-200 rounded-full flex items-center justify-center">
-                      <Bot className="w-4 h-4 text-slate-600" />
+                    <div className="w-8 h-8 rounded-full overflow-hidden flex items-center justify-center bg-slate-200">
+                      <Spline
+                        scene="https://prod.spline.design/6Wq1Q7YGyM-iab9i/scene.splinecode"
+                        style={{ width: '100%', height: '100%' }}
+                      />
                     </div>
                   </div>
                 )}
@@ -193,8 +199,11 @@ const LegalChat = () => {
                 className="flex justify-start"
               >
                 <div className="mr-3 flex-shrink-0">
-                  <div className="w-8 h-8 bg-slate-200 rounded-full flex items-center justify-center">
-                    <Bot className="w-4 h-4 text-slate-600" />
+                  <div className="w-8 h-8 rounded-full overflow-hidden flex items-center justify-center bg-slate-200">
+                    <Spline
+                      scene="https://prod.spline.design/6Wq1Q7YGyM-iab9i/scene.splinecode"
+                      style={{ width: '100%', height: '100%' }}
+                    />
                   </div>
                 </div>
                 <div className="max-w-xs">
