@@ -64,20 +64,21 @@ const SignUp = () => {
   };
 
   return (
-    <div className="min-h-screen bg-white flex flex-col relative overflow-hidden">
-      {/* Spline Animation Overlay */}
-      {isSignupComplete && (
-        <div className="fixed inset-0 z-50 pointer-events-none">
-          <Spline
-            scene="https://prod.spline.design/8PCQD8m91yKBVnUu/scene.splinecode"
-            ref={splineRef}
-            className="w-full h-full"
-          />
-        </div>
-      )}
+    <div className="min-h-screen flex flex-col relative overflow-hidden">
+      {/* Spline Background */}
+      <div className="fixed inset-0 z-0">
+        <Spline
+          scene="https://prod.spline.design/8PCQD8m91yKBVnUu/scene.splinecode"
+          ref={splineRef}
+          className="w-full h-full"
+        />
+      </div>
+
+      {/* Overlay for better readability */}
+      <div className="fixed inset-0 z-10 bg-white/80 backdrop-blur-sm"></div>
 
       {/* Header with back button */}
-      <div className="bg-white border-b border-slate-200 px-4 py-4 relative z-10">
+      <div className="bg-white/90 backdrop-blur-sm border-b border-slate-200 px-4 py-4 relative z-20">
         <div className="max-w-md mx-auto flex items-center">
           <Button
             onClick={handleGoBack}
@@ -92,14 +93,14 @@ const SignUp = () => {
       </div>
 
       {/* Main content */}
-      <div className="flex-1 flex items-center justify-center px-4 py-8 relative z-10">
+      <div className="flex-1 flex items-center justify-center px-4 py-8 relative z-20">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
           className="w-full max-w-md"
         >
-          <Card className="shadow-lg border border-slate-200">
+          <Card className="shadow-lg border border-slate-200 bg-white/95 backdrop-blur-sm">
             <CardHeader className="text-center space-y-2 pb-6">
               <CardTitle className="text-2xl md:text-3xl font-bold text-slate-800">
                 Create your account
