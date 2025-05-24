@@ -33,6 +33,34 @@ const LegalChat = () => {
     scrollToBottom();
   }, [messages, isTyping]);
 
+  const sendToWebhook = async (message: Message) => {
+    try {
+      console.log('Sending message to webhook:', message);
+      const response = await fetch('https://harshithjella.app.n8n.cloud/webhook-test/general-legal-bot', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          messageId: message.id,
+          content: message.content,
+          isAI: message.isAI,
+          timestamp: message.timestamp.toISOString(),
+          sender: message.isAI ? 'bot' : 'user',
+          chatSession: 'general-legal-chat'
+        }),
+      });
+
+      if (response.ok) {
+        console.log('Message sent to webhook successfully');
+      } else {
+        console.error('Failed to send message to webhook:', response.status);
+      }
+    } catch (error) {
+      console.error('Error sending message to webhook:', error);
+    }
+  };
+
   const handleSendMessage = async () => {
     if (!inputValue.trim()) return;
 
@@ -47,8 +75,11 @@ const LegalChat = () => {
     setInputValue('');
     setIsTyping(true);
 
+    // Send user message to webhook
+    await sendToWebhook(userMessage);
+
     // Simulate AI response delay
-    setTimeout(() => {
+    setTimeout(async () => {
       const aiResponse: Message = {
         id: (Date.now() + 1).toString(),
         content: "Thank you for your message. This is a demo response. In a full implementation, this would connect to an AI legal assistant service.",
@@ -58,6 +89,9 @@ const LegalChat = () => {
       
       setMessages(prev => [...prev, aiResponse]);
       setIsTyping(false);
+
+      // Send AI response to webhook
+      await sendToWebhook(aiResponse);
     }, 2000);
   };
 
@@ -77,6 +111,11 @@ const LegalChat = () => {
             <Bot className="w-5 h-5 text-white" />
           </div>
           <h1 className="text-xl font-semibold text-slate-800">General Legal Bot</h1>
+          <div className="ml-auto">
+            <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
+              Webhook Active
+            </span>
+          </div>
         </div>
       </div>
 
