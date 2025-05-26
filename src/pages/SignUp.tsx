@@ -11,6 +11,7 @@ import { useForm } from 'react-hook-form';
 import AuthLayout from '@/components/layout/AuthLayout';
 
 interface SignUpFormData {
+  role: 'user' | 'lawyer';
   fullName: string;
   email: string;
   password: string;
@@ -22,15 +23,26 @@ const SignUp = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [isSignupComplete, setIsSignupComplete] = useState(false);
+  const [selectedRole, setSelectedRole] = useState<'user' | 'lawyer'>('user');
   
   const {
     register,
     handleSubmit,
     watch,
+    setValue,
     formState: { errors, isSubmitting }
-  } = useForm<SignUpFormData>();
+  } = useForm<SignUpFormData>({
+    defaultValues: {
+      role: 'user'
+    }
+  });
 
   const password = watch('password');
+
+  const handleRoleChange = (role: 'user' | 'lawyer') => {
+    setSelectedRole(role);
+    setValue('role', role);
+  };
 
   const onSubmit = async (data: SignUpFormData) => {
     console.log('Sign up data:', data);
@@ -57,7 +69,7 @@ const SignUp = () => {
         <Card className="shadow-2xl border border-white/40 bg-white/95 backdrop-blur-xl">
           <CardHeader className="text-center space-y-2 pb-6">
             <CardTitle className="text-2xl md:text-3xl font-bold text-gray-800">
-              Create your account
+              {selectedRole === 'user' ? 'Sign Up as User' : 'Sign Up as Lawyer'}
             </CardTitle>
             <CardDescription className="text-gray-600">
               Join our legal platform to get started
@@ -66,6 +78,38 @@ const SignUp = () => {
           
           <CardContent>
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
+              {/* Role Selection */}
+              <div className="space-y-3">
+                <Label className="text-sm font-medium text-gray-700">
+                  I am a
+                </Label>
+                <div className="flex bg-gray-100 rounded-lg p-1">
+                  <button
+                    type="button"
+                    onClick={() => handleRoleChange('user')}
+                    className={`flex-1 py-2.5 px-4 rounded-md text-sm font-medium transition-all duration-200 ${
+                      selectedRole === 'user'
+                        ? 'bg-white text-blue-600 shadow-sm border border-blue-200'
+                        : 'text-gray-600 hover:text-gray-800'
+                    }`}
+                  >
+                    User
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => handleRoleChange('lawyer')}
+                    className={`flex-1 py-2.5 px-4 rounded-md text-sm font-medium transition-all duration-200 ${
+                      selectedRole === 'lawyer'
+                        ? 'bg-white text-blue-600 shadow-sm border border-blue-200'
+                        : 'text-gray-600 hover:text-gray-800'
+                    }`}
+                  >
+                    Lawyer
+                  </button>
+                </div>
+                <input type="hidden" {...register('role')} />
+              </div>
+
               {/* Full Name Field */}
               <div className="space-y-2">
                 <Label htmlFor="fullName" className="text-sm font-medium text-gray-700">
