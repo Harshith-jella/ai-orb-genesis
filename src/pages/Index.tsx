@@ -1,4 +1,3 @@
-
 import { motion } from "framer-motion";
 import Spline from "@splinetool/react-spline";
 import { Button } from "@/components/ui/button";
@@ -17,8 +16,7 @@ const Index = () => {
           <div className="flex gap-4">
             <Button
               onClick={() => navigate('/signin')}
-              variant="ghost"
-              className="text-white hover:bg-white/10 border border-white/20"
+              className="bg-blue-600 hover:bg-blue-700 text-white"
             >
               Sign In
             </Button>
