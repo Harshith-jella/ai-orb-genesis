@@ -303,11 +303,6 @@ const LegalChat = () => {
       {/* Input Section */}
       <div className="relative z-20 border-t border-white/20 bg-white/5 backdrop-blur-sm px-4 py-4">
         <div className="max-w-4xl mx-auto">
-          {/* Helper Tip */}
-          <div className="mb-3 text-center">
-            <span className="text-sm text-slate-300">You can type in plain language.</span>
-          </div>
-          
           {/* Input Bar */}
           <div className="flex items-end gap-3">
             <div className="flex-1 relative">
