@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Eye, EyeOff, User, Mail, Lock } from 'lucide-react';
@@ -46,6 +47,15 @@ const SignUp = () => {
   };
 
   const onSubmit = async (data: SignUpFormData) => {
+    // For testing, just show success and redirect
+    toast({
+      title: "Testing Mode",
+      description: "Authentication disabled for testing. Redirecting to sign in.",
+    });
+    navigate('/signin');
+    
+    // Commented out for testing
+    /*
     try {
       await signUp({
         email: data.email,
@@ -67,6 +77,7 @@ const SignUp = () => {
         variant: "destructive",
       });
     }
+    */
   };
 
   return (
@@ -82,10 +93,10 @@ const SignUp = () => {
         <Card className="shadow-2xl border border-white/40 bg-white/95 backdrop-blur-xl">
           <CardHeader className="text-center space-y-2 pb-6">
             <CardTitle className="text-2xl md:text-3xl font-bold text-gray-800">
-              {selectedRole === 'user' ? 'Sign Up as User' : 'Sign Up as Lawyer'}
+              {selectedRole === 'user' ? 'Sign Up as User (Testing)' : 'Sign Up as Lawyer (Testing)'}
             </CardTitle>
             <CardDescription className="text-gray-600">
-              Join our legal platform to get started
+              Authentication disabled for testing
             </CardDescription>
           </CardHeader>
           
@@ -260,7 +271,7 @@ const SignUp = () => {
                 disabled={isSubmitting}
                 className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-medium py-2.5 rounded-md transition-all duration-300 shadow-lg hover:shadow-blue-500/25 mt-6"
               >
-                {isSubmitting ? 'Creating Account...' : 'Sign Up'}
+                {isSubmitting ? 'Creating Account...' : 'Sign Up (Testing)'}
               </Button>
 
               {/* Sign In Link */}

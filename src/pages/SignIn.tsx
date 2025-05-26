@@ -30,7 +30,8 @@ const SignIn = () => {
     formState: { errors, isSubmitting }
   } = useForm<SignInFormData>();
 
-  // Redirect authenticated users based on their role
+  // Disabled redirect for testing
+  /*
   useEffect(() => {
     if (!loading && user && profile) {
       if (profile.role === 'lawyer') {
@@ -40,8 +41,18 @@ const SignIn = () => {
       }
     }
   }, [user, profile, loading, navigate]);
+  */
 
   const onSubmit = async (data: SignInFormData) => {
+    // For testing, just redirect without authentication
+    toast({
+      title: "Testing Mode",
+      description: "Authentication disabled for testing. Redirecting to user dashboard.",
+    });
+    navigate('/user-dashboard');
+    
+    // Commented out for testing
+    /*
     try {
       await signIn({
         email: data.email,
@@ -61,9 +72,10 @@ const SignIn = () => {
         variant: "destructive",
       });
     }
+    */
   };
 
-  // Show loading if we're checking auth state
+  // Show loading if we're checking auth state - disabled for testing
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -85,10 +97,10 @@ const SignIn = () => {
         <Card className="shadow-xl border border-gray-200/60 bg-white/95 backdrop-blur-sm">
           <CardHeader className="text-center space-y-2 pb-6">
             <CardTitle className="text-2xl md:text-3xl font-bold text-gray-800">
-              Welcome Back
+              Welcome Back (Testing Mode)
             </CardTitle>
             <CardDescription className="text-gray-600">
-              Access your legal platform dashboard
+              Authentication disabled for testing
             </CardDescription>
           </CardHeader>
           
@@ -184,7 +196,7 @@ const SignIn = () => {
                     className="absolute inset-0 bg-gradient-to-r from-blue-500 to-blue-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                   />
                   <span className="relative z-10">
-                    {isSubmitting ? 'Signing in...' : 'Sign In'}
+                    {isSubmitting ? 'Signing in...' : 'Sign In (Testing)'}
                   </span>
                 </Button>
               </motion.div>

@@ -19,6 +19,15 @@ export function DashboardLayout({ children, title, userType }: DashboardLayoutPr
   const { toast } = useToast();
 
   const handleLogout = async () => {
+    // For testing, just show toast and redirect
+    toast({
+      title: "Signed out (Testing)",
+      description: "Authentication disabled for testing.",
+    });
+    navigate('/');
+    
+    // Commented out for testing
+    /*
     try {
       await signOut();
       toast({
@@ -33,6 +42,7 @@ export function DashboardLayout({ children, title, userType }: DashboardLayoutPr
         variant: "destructive",
       });
     }
+    */
   };
 
   return (
@@ -44,7 +54,7 @@ export function DashboardLayout({ children, title, userType }: DashboardLayoutPr
             {/* Logo */}
             <div className="flex items-center">
               <Sparkles className="w-8 h-8 text-blue-600 mr-2" />
-              <span className="text-xl font-bold text-gray-900">LegalAI</span>
+              <span className="text-xl font-bold text-gray-900">LegalAI (Testing)</span>
             </div>
 
             {/* Navigation Items */}
