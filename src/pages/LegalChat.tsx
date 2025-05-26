@@ -1,3 +1,4 @@
+
 import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Send, User, ArrowLeft } from 'lucide-react';
@@ -37,7 +38,7 @@ const LegalChat = () => {
   const sendToWebhook = async (message: Message) => {
     try {
       console.log('Sending message to webhook:', message);
-      const response = await fetch('https://harshithjella.app.n8n.cloud/webhook-test/general-legal-bot', {
+      const response = await fetch('https://harshithjella.app.n8n.cloud/webhook/general-legal-bot', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
