@@ -1,4 +1,3 @@
-
 import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Send, User, ArrowLeft } from 'lucide-react';
@@ -329,11 +328,6 @@ const LegalChat = () => {
             >
               <Send className="w-4 h-4" />
             </Button>
-          </div>
-          
-          {/* Disclaimer */}
-          <div className="mt-3 text-xs text-slate-400 text-center">
-            This AI provides general legal information only and does not constitute legal advice.
           </div>
         </div>
       </div>
