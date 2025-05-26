@@ -10,6 +10,28 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-950 via-blue-950 to-slate-900 relative overflow-hidden">
+      {/* Navigation Bar */}
+      <nav className="absolute top-0 left-0 right-0 z-30 px-6 py-4">
+        <div className="max-w-7xl mx-auto flex justify-between items-center">
+          <div className="text-white font-bold text-xl">LegalAI</div>
+          <div className="flex gap-4">
+            <Button
+              onClick={() => navigate('/signin')}
+              variant="ghost"
+              className="text-white hover:bg-white/10 border border-white/20"
+            >
+              Sign In
+            </Button>
+            <Button
+              onClick={() => navigate('/signup')}
+              className="bg-blue-600 hover:bg-blue-700 text-white"
+            >
+              Sign Up
+            </Button>
+          </div>
+        </div>
+      </nav>
+
       {/* Enhanced Background Effects */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(120,119,198,0.15),transparent_50%)]"></div>
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_20%,rgba(120,119,198,0.1),transparent_50%)]"></div>
