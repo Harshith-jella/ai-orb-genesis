@@ -16,6 +16,7 @@ import AuthLayout from '@/components/layout/AuthLayout';
 interface SignInFormData {
   email: string;
   password: string;
+  testRole: 'user' | 'lawyer';
 }
 
 const SignIn = () => {
@@ -23,12 +24,18 @@ const SignIn = () => {
   const { toast } = useToast();
   const { user, profile, loading } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
+  const [selectedTestRole, setSelectedTestRole] = useState<'user' | 'lawyer'>('user');
   
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors, isSubmitting }
-  } = useForm<SignInFormData>();
+  } = useForm<SignInFormData>({
+    defaultValues: {
+      testRole: 'user'
+    }
+  });
 
   // Disabled redirect for testing
   /*
@@ -43,13 +50,20 @@ const SignIn = () => {
   }, [user, profile, loading, navigate]);
   */
 
+  const handleTestRoleChange = (role: 'user' | 'lawyer') => {
+    setSelectedTestRole(role);
+    setValue('testRole', role);
+  };
+
   const onSubmit = async (data: SignInFormData) => {
-    // For testing, just redirect without authentication
+    // For testing, redirect based on selected role
+    const dashboardRoute = data.testRole === 'lawyer' ? '/lawyer-dashboard' : '/user-dashboard';
+    
     toast({
       title: "Testing Mode",
-      description: "Authentication disabled for testing. Redirecting to user dashboard.",
+      description: `Authentication disabled for testing. Redirecting to ${data.testRole} dashboard.`,
     });
-    navigate('/user-dashboard');
+    navigate(dashboardRoute);
     
     // Commented out for testing
     /*
@@ -100,23 +114,55 @@ const SignIn = () => {
               Welcome Back (Testing Mode)
             </CardTitle>
             <CardDescription className="text-gray-600">
-              Authentication disabled for testing
+              Authentication disabled for testing - choose your role below
             </CardDescription>
           </CardHeader>
           
           <CardContent>
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
+              {/* Role Selection for Testing */}
+              <div className="space-y-3">
+                <Label className="text-sm font-medium text-gray-700">
+                  Test as (Role Selection)
+                </Label>
+                <div className="flex bg-gray-100 rounded-lg p-1">
+                  <button
+                    type="button"
+                    onClick={() => handleTestRoleChange('user')}
+                    className={`flex-1 py-2.5 px-4 rounded-md text-sm font-medium transition-all duration-200 ${
+                      selectedTestRole === 'user'
+                        ? 'bg-white text-blue-600 shadow-sm border border-blue-200'
+                        : 'text-gray-600 hover:text-gray-800'
+                    }`}
+                  >
+                    User Dashboard
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => handleTestRoleChange('lawyer')}
+                    className={`flex-1 py-2.5 px-4 rounded-md text-sm font-medium transition-all duration-200 ${
+                      selectedTestRole === 'lawyer'
+                        ? 'bg-white text-blue-600 shadow-sm border border-blue-200'
+                        : 'text-gray-600 hover:text-gray-800'
+                    }`}
+                  >
+                    Lawyer Dashboard
+                  </button>
+                </div>
+                <input type="hidden" {...register('testRole')} />
+              </div>
+
               {/* Email Field */}
               <div className="space-y-2">
                 <Label htmlFor="email" className="text-sm font-medium text-gray-700">
-                  Email
+                  Email (Testing - any email works)
                 </Label>
                 <div className="relative">
                   <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 w-4 h-4" />
                   <Input
                     id="email"
                     type="email"
-                    placeholder="Enter your email"
+                    placeholder="test@example.com"
                     className={`pl-10 bg-white/80 border-gray-300 text-gray-800 placeholder:text-gray-500 focus:border-blue-500 focus:ring-blue-500/20 ${
                       errors.email ? 'border-red-400 focus:border-red-400 focus:ring-red-400/20' : ''
                     }`}
@@ -137,14 +183,14 @@ const SignIn = () => {
               {/* Password Field */}
               <div className="space-y-2">
                 <Label htmlFor="password" className="text-sm font-medium text-gray-700">
-                  Password
+                  Password (Testing - any password works)
                 </Label>
                 <div className="relative">
                   <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 w-4 h-4" />
                   <Input
                     id="password"
                     type={showPassword ? 'text' : 'password'}
-                    placeholder="Enter your password"
+                    placeholder="test123"
                     className={`pl-10 pr-10 bg-white/80 border-gray-300 text-gray-800 placeholder:text-gray-500 focus:border-blue-500 focus:ring-blue-500/20 ${
                       errors.password ? 'border-red-400 focus:border-red-400 focus:ring-red-400/20' : ''
                     }`}
@@ -196,7 +242,7 @@ const SignIn = () => {
                     className="absolute inset-0 bg-gradient-to-r from-blue-500 to-blue-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                   />
                   <span className="relative z-10">
-                    {isSubmitting ? 'Signing in...' : 'Sign In (Testing)'}
+                    {isSubmitting ? 'Signing in...' : `Sign In as ${selectedTestRole === 'lawyer' ? 'Lawyer' : 'User'} (Testing)`}
                   </span>
                 </Button>
               </motion.div>
