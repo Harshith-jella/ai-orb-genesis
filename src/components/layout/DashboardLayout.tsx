@@ -5,6 +5,8 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { LayoutDashboard, Settings, LogOut, Sparkles } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
+import { signOut } from "@/lib/auth";
 
 interface DashboardLayoutProps {
   children: ReactNode;
@@ -14,10 +16,23 @@ interface DashboardLayoutProps {
 
 export function DashboardLayout({ children, title, userType }: DashboardLayoutProps) {
   const navigate = useNavigate();
+  const { toast } = useToast();
 
-  const handleLogout = () => {
-    // Add logout logic here
-    navigate('/');
+  const handleLogout = async () => {
+    try {
+      await signOut();
+      toast({
+        title: "Signed out",
+        description: "You have been signed out successfully.",
+      });
+      navigate('/');
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to sign out",
+        variant: "destructive",
+      });
+    }
   };
 
   return (

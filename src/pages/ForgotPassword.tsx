@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Mail, ArrowLeft, Scale } from 'lucide-react';
@@ -8,6 +7,8 @@ import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { useNavigate, Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
+import { useToast } from '@/hooks/use-toast';
+import { resetPassword } from '@/lib/auth';
 
 interface ForgotPasswordFormData {
   email: string;
@@ -15,6 +16,7 @@ interface ForgotPasswordFormData {
 
 const ForgotPassword = () => {
   const navigate = useNavigate();
+  const { toast } = useToast();
   
   const {
     register,
@@ -23,9 +25,19 @@ const ForgotPassword = () => {
   } = useForm<ForgotPasswordFormData>();
 
   const onSubmit = async (data: ForgotPasswordFormData) => {
-    console.log('Reset password request for:', data.email);
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    // Here you would typically call your password reset API
+    try {
+      await resetPassword(data.email);
+      toast({
+        title: "Reset email sent!",
+        description: "Please check your email for password reset instructions.",
+      });
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: error instanceof Error ? error.message : "Failed to send reset email",
+        variant: "destructive",
+      });
+    }
   };
 
   const handleGoBack = () => {

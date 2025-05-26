@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Eye, EyeOff, User, Mail, Lock } from 'lucide-react';
@@ -8,6 +7,8 @@ import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { useNavigate, Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
+import { useToast } from '@/hooks/use-toast';
+import { signUp } from '@/lib/auth';
 import AuthLayout from '@/components/layout/AuthLayout';
 
 interface SignUpFormData {
@@ -20,9 +21,9 @@ interface SignUpFormData {
 
 const SignUp = () => {
   const navigate = useNavigate();
+  const { toast } = useToast();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [isSignupComplete, setIsSignupComplete] = useState(false);
   const [selectedRole, setSelectedRole] = useState<'user' | 'lawyer'>('user');
   
   const {
@@ -45,15 +46,27 @@ const SignUp = () => {
   };
 
   const onSubmit = async (data: SignUpFormData) => {
-    console.log('Sign up data:', data);
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    
-    setIsSignupComplete(true);
-    
-    // Navigate after animation completes
-    setTimeout(() => {
-      navigate('/chat');
-    }, 1000);
+    try {
+      await signUp({
+        email: data.email,
+        password: data.password,
+        fullName: data.fullName,
+        role: data.role,
+      });
+      
+      toast({
+        title: "Success!",
+        description: "Please check your email to verify your account.",
+      });
+      
+      navigate('/signin');
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: error instanceof Error ? error.message : "Failed to create account",
+        variant: "destructive",
+      });
+    }
   };
 
   return (
@@ -244,10 +257,10 @@ const SignUp = () => {
               {/* Sign Up Button */}
               <Button
                 type="submit"
-                disabled={isSubmitting || isSignupComplete}
+                disabled={isSubmitting}
                 className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-medium py-2.5 rounded-md transition-all duration-300 shadow-lg hover:shadow-blue-500/25 mt-6"
               >
-                {isSubmitting ? 'Creating Account...' : isSignupComplete ? 'Success!' : 'Sign Up'}
+                {isSubmitting ? 'Creating Account...' : 'Sign Up'}
               </Button>
 
               {/* Sign In Link */}

@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Eye, EyeOff, Mail, Lock } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -8,40 +8,69 @@ import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { useNavigate, Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
+import { useToast } from '@/hooks/use-toast';
+import { signIn } from '@/lib/auth';
+import { useAuth } from '@/contexts/AuthContext';
 import AuthLayout from '@/components/layout/AuthLayout';
 
 interface SignInFormData {
-  role: 'user' | 'lawyer';
   email: string;
   password: string;
 }
 
 const SignIn = () => {
   const navigate = useNavigate();
+  const { toast } = useToast();
+  const { user, profile, loading } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
-  const [selectedRole, setSelectedRole] = useState<'user' | 'lawyer'>('user');
   
   const {
     register,
     handleSubmit,
-    setValue,
     formState: { errors, isSubmitting }
-  } = useForm<SignInFormData>({
-    defaultValues: {
-      role: 'user'
-    }
-  });
+  } = useForm<SignInFormData>();
 
-  const handleRoleChange = (role: 'user' | 'lawyer') => {
-    setSelectedRole(role);
-    setValue('role', role);
-  };
+  // Redirect authenticated users based on their role
+  useEffect(() => {
+    if (!loading && user && profile) {
+      if (profile.role === 'lawyer') {
+        navigate('/lawyer-dashboard');
+      } else {
+        navigate('/user-dashboard');
+      }
+    }
+  }, [user, profile, loading, navigate]);
 
   const onSubmit = async (data: SignInFormData) => {
-    console.log('Sign in data:', data);
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    navigate('/chat');
+    try {
+      await signIn({
+        email: data.email,
+        password: data.password,
+      });
+      
+      toast({
+        title: "Success!",
+        description: "You have been signed in successfully.",
+      });
+      
+      // Navigation will be handled by useEffect after profile is loaded
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: error instanceof Error ? error.message : "Failed to sign in",
+        variant: "destructive",
+      });
+    }
   };
+
+  // Show loading if we're checking auth state
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-600"></div>
+      </div>
+    );
+  }
 
   return (
     <AuthLayout
@@ -56,7 +85,7 @@ const SignIn = () => {
         <Card className="shadow-xl border border-gray-200/60 bg-white/95 backdrop-blur-sm">
           <CardHeader className="text-center space-y-2 pb-6">
             <CardTitle className="text-2xl md:text-3xl font-bold text-gray-800">
-              {selectedRole === 'user' ? 'Login as User' : 'Login as Lawyer'}
+              Welcome Back
             </CardTitle>
             <CardDescription className="text-gray-600">
               Access your legal platform dashboard
@@ -65,38 +94,6 @@ const SignIn = () => {
           
           <CardContent>
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
-              {/* Role Selection */}
-              <div className="space-y-3">
-                <Label className="text-sm font-medium text-gray-700">
-                  I am a
-                </Label>
-                <div className="flex bg-gray-100 rounded-lg p-1">
-                  <button
-                    type="button"
-                    onClick={() => handleRoleChange('user')}
-                    className={`flex-1 py-2.5 px-4 rounded-md text-sm font-medium transition-all duration-200 ${
-                      selectedRole === 'user'
-                        ? 'bg-white text-blue-600 shadow-sm border border-blue-200'
-                        : 'text-gray-600 hover:text-gray-800'
-                    }`}
-                  >
-                    User
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => handleRoleChange('lawyer')}
-                    className={`flex-1 py-2.5 px-4 rounded-md text-sm font-medium transition-all duration-200 ${
-                      selectedRole === 'lawyer'
-                        ? 'bg-white text-blue-600 shadow-sm border border-blue-200'
-                        : 'text-gray-600 hover:text-gray-800'
-                    }`}
-                  >
-                    Lawyer
-                  </button>
-                </div>
-                <input type="hidden" {...register('role')} />
-              </div>
-
               {/* Email Field */}
               <div className="space-y-2">
                 <Label htmlFor="email" className="text-sm font-medium text-gray-700">
@@ -187,7 +184,7 @@ const SignIn = () => {
                     className="absolute inset-0 bg-gradient-to-r from-blue-500 to-blue-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                   />
                   <span className="relative z-10">
-                    {isSubmitting ? 'Signing in...' : 'Login'}
+                    {isSubmitting ? 'Signing in...' : 'Sign In'}
                   </span>
                 </Button>
               </motion.div>
