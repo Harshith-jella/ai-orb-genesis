@@ -17,6 +17,14 @@ export interface AuthError {
   message: string;
 }
 
+export interface Profile {
+  id: string;
+  full_name: string | null;
+  role: 'user' | 'lawyer';
+  created_at: string;
+  updated_at: string;
+}
+
 export const signUp = async ({ email, password, fullName, role }: SignUpData) => {
   const { data, error } = await supabase.auth.signUp({
     email,
@@ -67,7 +75,7 @@ export const resetPassword = async (email: string) => {
   }
 };
 
-export const getUserProfile = async (userId: string) => {
+export const getUserProfile = async (userId: string): Promise<Profile> => {
   const { data, error } = await supabase
     .from('profiles')
     .select('*')
@@ -78,7 +86,11 @@ export const getUserProfile = async (userId: string) => {
     throw new Error(error.message);
   }
 
-  return data;
+  // Type assertion to ensure role is correctly typed
+  return {
+    ...data,
+    role: data.role as 'user' | 'lawyer'
+  };
 };
 
 export const getCurrentUser = () => {
